@@ -1,0 +1,122 @@
+.AgreeBox {
+    height: auto;
+}
+
+.AgreeBox form fieldset>div {
+    margin-bottom: 45px;
+}
+
+.AgreeBox form fieldset>div label {
+    font-size: 25px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.AgreeBox form fieldset>div input {
+    border-radius: 8px;
+}
+
+
+.AgreeBox form fieldset>div:nth-child(4) input {
+    width: 70%;
+    margin-right: 5%;
+}
+
+.AgreeBox form fieldset>div:nth-child(4) .idCheck,
+.AgreeBox form fieldset>div:nth-child(7) .addressCheck {
+    width: 140px;
+    height: 55px;
+    text-align: center;
+    line-height: 57px;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.AgreeBox form fieldset>div:nth-child(7) input {
+    margin-bottom: 10px;
+    margin-right: 5%;
+}
+
+.AgreeBox form fieldset>div:nth-child(7) input:nth-child(2) {
+    width: 70%;
+}
+
+.AgreeBox form fieldset>div:nth-child(8) input,
+.AgreeBox form fieldset>div:nth-child(9) input {
+    width: 70%;
+    margin-right: 10px;
+}
+
+.join__btn {
+    margin: 0 auto;
+    display: block;
+    padding: 18px 50px;
+    border-radius: 50px;
+    border-width: 3px;
+    font-size: 26px;
+    margin-top: 70px;
+    background: #fff;
+    transition: all 0.3s;
+}
+
+.join__btn:hover {
+    background-color: #414ca9;
+    color: #fff;
+}
+
+.warning {
+    color: red;
+    font-size: 15px;
+    margin-top: 10px;
+    vertical-align: bottom;
+}
+
+
+@media (max-width: 770px) {
+    .AgreeBox form fieldset>div:nth-child(4) input,
+    .AgreeBox form fieldset>div:nth-child(7) input:nth-child(2) {
+        width: 60%;
+    }
+
+    .AgreeBox form fieldset>div:nth-child(4) .idCheck,
+    .AgreeBox form fieldset>div:nth-child(7) .addressCheck {
+        width: 100px ;
+    }
+    .warning {
+       margin-top: 5px;
+       font-size: 13px;
+        display: block;
+    }
+}
+@media (max-width: 468px){
+    .AgreeBox form fieldset>div label {
+        font-size: 18px;
+    }
+    .AgreeBox form fieldset>div:nth-child(4) input,
+    .AgreeBox form fieldset>div:nth-child(7) input:nth-child(2) {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .AgreeBox form fieldset>div:nth-child(4) .idCheck,
+    .AgreeBox form fieldset>div:nth-child(7) .addressCheck{
+        width: 80px ;
+        font-size: 15px ;
+        height: 30px;
+        line-height: 30px;
+        float: right;
+    }
+    .AgreeBox form fieldset>div:nth-child(7) .addressCheck {
+        margin-bottom: 10px;
+    }
+    .AgreeBox form fieldset>div:nth-child(8) input,
+    .AgreeBox form fieldset>div:nth-child(9) input {
+    width: 100%;
+    }
+    .join__btn {
+        padding: 10px 40px;
+        font-size: 20px;
+        margin-top: 0px;
+    }
+}
+

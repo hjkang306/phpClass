@@ -34,6 +34,16 @@
                 </div>
                 <div class="board__search">
                     <div class="left">
+<?php
+    $sql = "SELECT b.myBoardID, b.boardTitle, m.youName, b.regTime, b.boardView FROM myBoard b JOIN myMember m ON (b.myMemberID = m.myMemberID) ORDER BY myBoardID";
+    $result = $connect -> query($sql);
+
+    $count = $result -> num_rows;
+    echo "<p>✨총 <em>{$count}</em>건의 게시물이 등록되어 있습니다.</p>";
+    // function info(){
+    //     echo "<p>✨총 <em></em>페이지, <em>{$count}</em>건의 게시물이 등록되어 있습니다.</p>";
+    // }
+?>
                         <!-- ✨총 <em>1111</em>건의 게시물이 등록되어 있습니다. -->
                     </div>
                     <div class="right">

@@ -29,55 +29,44 @@
             <div class="board__inner">
                 <div class="board__title">
                     <h3>검색 결과 게시판</h3>
-                    <p>웹디자이너, 웹퍼블리셔, 프론트앤드 개발자를 위한 게시판입니다.</p>
 <?php
+    // 페이지 정보 가져오기, 없으면 1
     if(isset($_GET['page'])){
         $page = (int)$_GET['page'];
     } else {
         $page = 1;
     }
 
-    $viewNum = 10;
-    $viewLimit = ($viewNum * $page) - $viewNum;
-
+    //n건 출력 함수
     function msg($alert){
         echo "<p>총 ".$alert."건이 검색되었습니다.</p>";
     }
     $searchKeyword = $_GET['searchKeyword'];
     $searchOption = $_GET['searchOption'];
 
-    //echo $searchKeyword, $searchOption;
-
     $searchKeyword = $connect -> real_escape_string(trim($searchKeyword));
     $searchOption = $connect -> real_escape_string(trim($searchOption));
 
-    // 쿼리문(JOIN)
-    // b.boardID, b.boardTitle, b.boardContents, m.youName, b.regTime, b.boardView
-
-    // $sql "SELECT b.boardID, b.boardTitle, b.boardContents, m.youName, b.regTime, b.boardView FROM myBoard b JOIN myMember m ON(b.myMemberID = m.myMemberID) WHERE b.boardTitle LIKE '%{$searchKeyword}%' ORDER BY myBoardID DESC LIMIT 10";
-    // $sql "SELECT b.boardID, b.boardTitle, b.boardContents, m.youName, b.regTime, b.boardView FROM myBoard b JOIN myMember m ON(b.myMemberID = m.myMemberID) WHERE b.boardContents LIKE '%{$searchKeyword}%' ORDER BY myBoardID DESC LIMIT 10";
-    // $sql "SELECT b.boardID, b.boardTitle, b.boardContents, m.youName, b.regTime, b.boardView FROM myBoard b JOIN myMember m ON(b.myMemberID = m.myMemberID) WHERE m.youName LIKE '%{$searchKeyword}%' ORDER BY myBoardID DESC LIMIT 10";
-
-    $sql = "SELECT b.myBoardID, b.boardTitle, b.boardContents, m.youName, b.regTime, b.boardView FROM myBoard b JOIN myMember m ON(b.myMemberID = m.myMemberID) DESC LIMIT {$viewLimit}, {$viewNum}";
+    $sql = "SELECT b.myBoardID, b.boardTitle, b.boardContents, m.youName, b.regTime, b.boardView FROM myboard b JOIN myMember m ON(b.myMemberID = m.myMemberID) ";
 
     switch($searchOption){
-        case 'title':
+        case "title":
             $sql .= "WHERE b.boardTitle LIKE '%{$searchKeyword}%' ORDER BY myBoardID DESC";
             break;
-        case 'content':
-            $sql .= "WHERE b.boardContents LIKE '%{$searchKeyword}%' ORDER BY myBoardID DESC";   
+        case "content":
+            $sql .= "WHERE b.boardContents LIKE '%{$searchKeyword}%' ORDER BY myBoardID DESC";
             break;
-        case 'name':
-            $sql .= "WHERE m.youName LIKE '%{$searchKeyword}%' ORDER BY myBoardID DESC";   
+        case "name":
+            $sql .= "WHERE m.youName LIKE '%{$searchKeyword}%' ORDER BY myBoardID DESC";
             break;
     }
-
     $result = $connect -> query($sql);
 
-    if($result){
-        $count = $result -> num_rows;
-        msg($count);
-    }
+    // 전체 게시글의 갯수
+    $totalCount = $result -> num_rows;
+    msg($totalCount);
+
+    // echo $sql;
 ?>
                 </div>
                 <div class="board__table">
@@ -100,8 +89,13 @@
                         </thead>
                         <tbody>
 <?php
-    
-    //
+
+    $viewNum = 10;
+    $viewLimit = ($viewNum * $page) - $viewNum;
+
+    $sql = $sql." LIMIT {$viewLimit}, {$viewNum}";
+    $result = $connect -> query($sql);
+
     if($result){
         $count = $result -> num_rows;
 
@@ -128,10 +122,12 @@
                 <div class="board__pages">
                     <ul>
 <?php
-    
+    // echo $totalCount;
+
     // 총 페이지 갯수
-    $boardCount = $count;
-    $boardCount = ceil($boardCount/$viewNum);
+    $boardCount = ceil($totalCount/$viewNum);
+
+    // echo $boardCount;
 
     // 현재 페이지를 기준으로 보여주고 싶은 갯수
     $pageCurrent = 5;
