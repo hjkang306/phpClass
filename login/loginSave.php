@@ -1,12 +1,17 @@
+<?php
+    include "../connect/connect.php";
+    include "../connect/session.php";
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
+    <title>PHP 사이트 만들기</title>
 
-    <?php include "../include/link.php" ?>
+    <?php include "../include/head.php"?>
 </head>
 <body>
     <div id="skip">
@@ -15,69 +20,52 @@
         <a href="#footer">푸터 영역 바로가기</a>
     </div>
     <!-- //skip -->
-
-    <?php include "../include/header.php" ?>
+    
+    <?php include "../include/header.php"?>
+    <!-- //header -->
 
     <main id="main">
-        <section id="banner">
-            <h2>회원가입 페이지입니다.</h2>
-            <div class="banner__inner2 container">
+        <section id="banner" class="container section">
+            <h2 class="blind">회원가입 축하합니다.</h2>
+            <div class="banner__inner style2">
                 <div class="img">
-                    <img src="../assets/img/banner_img01.svg" alt="배너 이미지1">
+                    <img src="../assets/img/banner_img03.svg" alt="배너 이미지">
                 </div>
                 <div class="desc">
+                    어떤 일이라도 <em>노력</em>하고 즐기면 그 결과는 <em>빛</em>을 발한다고 생각합니다.<br>
                     <?php
-                        include "../connect/connect.php";
-                        include "../connect/session.php";
-
                         $youEmail = $_POST['youEmail'];
                         $youPass = $_POST['youPass'];
-
                         // echo $youEmail, $youPass;
-
                         function msg($alert){
-                            echo "<p class='alert'>{$alert}</p>";
+                            echo "<p class='alert'>${alert}</p>";
+                            echo "<a class='btn btn_style1 mt30' href='../login/login.php'>로그인</a>";
                         }
-
-                        // 사용자 정보 --> 쿠키 / 세션
-                        
-                        // 이메일 검사
-                        if (!filter_var($youEmail, FILTER_VALIDATE_EMAIL)){
-                            msg("이메일이 잘못되었습니다.<br>올바른 이메일을 입력해 주세요.");
-                            exit;
-                        }
-
-                        // 비밀번호 검사
-                        if ($youPass == null || $youPass == ''){
-                            msg("비밀번호를 입력해주세요.");
-                            exit;
-                        }
-                        // 데이터 가져오기 --> 유효성 검사 --> 데이터 조회 --> 로그인
-                        $sql = "SELECT myMemberID, youEmail, youName, youPass FROM myMember WHERE youEmail = '$youEmail' AND youPass = '$youPass'";
+                        // 데이터 조회
+                        $sql = "SELECT memberID, youEmail, youName, youPass FROM myMember WHERE youEmail = '$youEmail' AND youPass = '$youPass'";
                         $result = $connect -> query($sql);
-
                         if($result){
                             $count = $result -> num_rows;
-
-                            if($count == 0 ){
+                            if($count == 0){
                                 msg("이메일 또는 비밀번호가 틀렸습니다.");
                             } else {
-                                $info = $result -> fetch_array(MYSQLI_ASSOC);
-
-                                $_SESSION['myMemberID'] = $info['myMemberID'];
-                                $_SESSION['youEmail'] = $info['youEmail'];
-                                $_SESSION['youName'] = $info['youName'];
-
+                                //로그인 성공
+                                $memberInfo = $result -> fetch_array(MYSQLI_ASSOC);
+                                //섹션 생성
+                                $_SESSION['memberID'] = $memberInfo['memberID'];
+                                $_SESSION['youEmail'] = $memberInfo['youEmail'];
+                                $_SESSION['youName'] = $memberInfo['youName'];
                                 // echo "<pre>";
-                                // var_dump($info);
-                                // echo "</pre>";
-
+                                // var_dump($result);
+                                // echo "<pre>";
                                 Header("Location: ../main/main.php");
                             }
                         } else {
-                            msg("에러발생 - 관리자에게 문의하세요.");
+                            msg("에러발생 - 관리자에게 문의하세요");
                         }
                     ?>
+
+
                 </div>
             </div>
         </section>
@@ -85,12 +73,8 @@
     </main>
     <!-- //main -->
 
-    <?php include "../include/footer.php" ?>
+    <?php include "../include/footer.php"?>
     <!-- //footer -->
-
-    <?php include "../login/login.php" ?>
-    <!-- 로그인 -->
-
-    <script src="../assets/js/custom.js"></script>
+    
 </body>
 </html>

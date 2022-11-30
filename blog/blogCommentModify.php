@@ -1,12 +1,17 @@
 <?php
     include "../connect/connect.php";
 
-    $commentMsg = $_POST['msg'];
     $commentPass = $_POST['pass'];
-    $myCommentID = $_POST['commentID'];
+    $commentmsg = $_POST["commentmsg"];
+    $commentID = $_POST["commentID"];
 
-    $sql = "UPDATE myComment SET commentMsg = '$commentMsg' WHERE myCommentID = $myCommentID";
+    
+
+    $sql = "UPDATE myComment SET commentMsg = '{$commentmsg}' WHERE CommentID = {$commentID} AND commentPass = {$commentPass}";
     $result = $connect -> query($sql);
 
     echo json_encode(array("info" => $sql));
+
+
+
 ?>

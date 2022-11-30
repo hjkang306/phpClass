@@ -1,30 +1,39 @@
 <header id="header">
     <div class="header__inner container">
         <div class="left">
-            <ul>
-                <li><a href="../main/main.php" class="star"></a></li>
-            </ul>
+            <a href="../index.html" class="star"><span class="ir">메인으로</span></a>
         </div>
-        <h1><a href="../main/main.php">PHP BLOG</a></h1>
+        <h1>
+            <a href="../main/main.php">PHP SITE</a>
+        </h1>
         <div class="right">
-            <ul>
-                <?php if( isset($_SESSION['myMemberID']) ){ ?>
-                    <li><a href="#" class="black"><?= $_SESSION['youName'] ?>님 환영합니다 ༼ つ ◕_◕ ༽つ</a></li>
+            <?php if(isset($_SESSION['memberID'])){ ?>
+                <ul>
+                    <li><a href="../mypage/mypage.php" class="black"><?=$_SESSION['youName']?>님 환영합니다.</a></li>
                     <li><a href="../login/logout.php">로그아웃</a></li>
-                <?php } else { ?>
-                    <li><a href="#" class="loginBtn">로그인</a></li>
-                    <li><a href="../login/join.php">회원가입</a></li>
-                <?php } ?>
-            </ul>
+                </ul>
+            <?php } else { ?>
+                <ul>
+                    <li><a href="../login/login.php">로그인</a></li>
+                    <li><a href="../join/join.php">회원가입</a></li>
+                </ul>
+            <?php } ?>
         </div>
         <nav class="nav">
-            <ul>
-                <li><a href="../login/join.php">회원가입</a></li>
-                <li><a href="../board/board.php">게시판</a></li>
-                <li><a href="../blog/blog.php">블로그</a></li>
-                <li><a href="#">연락처</a></li>
-            </ul>
+            <?php if(isset($_SESSION['memberID'])){ ?>
+                <ul>
+                    <li><a href="../board/board.php"><span>게시판</span></a></li>
+                    <li><a href="../blog/blog.php"><span>블로그</span></a></li>
+                    <li><a href="../blog/blogCategory.php?category=javascript"><span>카테고리</span></a></li>
+                </ul>
+            <?php } else { ?>
+                <ul>
+                    <li><a href="../join/join.php"><span>회원가입</span></a></li>
+                    <li><a href="../board/board.php"><span>게시판</span></a></li>
+                    <li><a href="../blog/blog.php"><span>블로그</span></a></li>
+                    <li><a href="../blog/blogCategory.php?category=javascript"><span>카테고리</span></a></li>
+                </ul>
+            <?php } ?>
         </nav>
     </div>
 </header>
-<!-- //header -->
